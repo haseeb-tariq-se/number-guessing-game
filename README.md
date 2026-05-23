@@ -34,7 +34,7 @@ Method creation and reuse
 1. Download or clone the repository  
 2. Open the project in IntelliJ IDEA or any Java IDE  
 3. Compile the Java file  
-4. Run `DecodeLabsProject.java`  
+4. Run `Number Guessing Game` file
 5. Follow the console instructions to play the game  
 
 ## Game Rules
