@@ -1,0 +1,75 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class DecodeLabsProject {
+
+    static int generateNumber(int min, int max) {
+        Random rand = new Random();
+        int number = rand.nextInt((max - min) + 1) + min;
+        return number;
+    }
+
+    static String checkGuess(int guess, int target) {
+        String result;
+        if(guess < target) {
+            result = "Too low!";
+        } else if(guess > target) {
+            result = "Too high!";
+        } else {
+            result = "Correct!";
+        }
+        return result;
+    }
+
+    static int playRound(Scanner sc, int min, int max, int maxAttempts) {
+        int target = generateNumber(min, max);
+        int attempts = 0;
+        String feedback = "";
+        System.out.println("\nGuess a number between " + min + " and " + max + " (max " + maxAttempts + " attempts):");
+        while(attempts < maxAttempts && !feedback.equals("Correct!")) {
+            System.out.print("Attempt " + (attempts + 1) + ": ");
+            int guess = sc.nextInt();
+            attempts++;
+            feedback = checkGuess(guess, target);
+            System.out.println(feedback);
+        }
+        if(!feedback.equals("Correct!")) {
+            System.out.println("Out of attempts! The number was: " + target);
+            return 0;
+        }
+        int score = maxAttempts - attempts + 1;
+        return score;
+    }
+
+    static boolean askPlayAgain(Scanner sc) {
+        System.out.print("\nPlay another round? (y/n): ");
+        String answer = sc.next();
+        boolean playAgain = answer.equalsIgnoreCase("y");
+        return playAgain;
+    }
+
+    static void displayFinalScore(int totalScore, int rounds) {
+        System.out.println("\n--- Game Over ---");
+        System.out.println("Rounds played : " + rounds);
+        System.out.println("Total score   : " + totalScore);
+        System.out.println("Average score : " + (totalScore / rounds));
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int min = 1;
+        int max = 100;
+        int maxAttempts = 7;
+        int totalScore = 0;
+        int rounds = 0;
+        System.out.println("=== NUMBER GAME ===");
+        do {
+            int score = playRound(sc, min, max, maxAttempts);
+            totalScore += score;
+            rounds++;
+            System.out.println("Score this round: " + score);
+        } while(askPlayAgain(sc));
+        displayFinalScore(totalScore, rounds);
+        sc.close();
+    }
+}
